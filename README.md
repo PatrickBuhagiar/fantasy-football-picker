@@ -7,5 +7,8 @@ A script that picks a Fantasy Football Team within budget
 ```
 nvm use
 yarn install
-yarn run
+```
+and then run one of the following:
+```
+yarn run default
 ```

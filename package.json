@@ -6,7 +6,7 @@
   "author": "Patrick Buhagiar <patrick@freetrade.io>",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.21.1",
+    "bent": "^7.3.12",
     "typescript": "^4.3.5"
   },
   "devDependencies": {
@@ -15,6 +15,6 @@
     "ts-node": "^10.1.0"
   },
   "scripts": {
-    "script": "ts-node index.ts -d"
+    "default": "ts-node index.ts -d"
   }
 }
