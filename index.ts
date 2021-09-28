@@ -22,7 +22,8 @@ async function run() {
 
   let bestTeam: TeamSelection = null
   if (isDefault) {
-    for (let i = 0; i < 1000000; i++) {
+    for (let i = 0; i < 3000000; i++) {
+      // pick team at random
       let newTeam = selectTeam(payload)
       if (newTeam.score) {
         if (bestTeam === null || bestTeam.score < newTeam.score) {
@@ -40,13 +41,10 @@ function moreThan3SameTeam(groupedByTeam: { number: Element[] }) {
 
 function validate(allPlayers: Element[], totalCost: number) {
   const groupedByTeam: {number: Element[]} = _.groupBy(allPlayers, 'team')
-  if (totalCost > 1000) {
+  if (totalCost > 998) {
     return false
   }
-  if (moreThan3SameTeam(groupedByTeam)) {
-    return false
-  }
-  return true;
+  return !moreThan3SameTeam(groupedByTeam);
 }
 
 function selectTeam(payload: Payload): TeamSelection {
@@ -59,7 +57,8 @@ function selectTeam(payload: Payload): TeamSelection {
 
   const allPlayers: Element[] = [...selectedKeepers, ...selectedDefenders, ...selectedMidfielders, ...selectedForwards]
   const totalCost = allPlayers.map( ({now_cost}) => now_cost).reduce((a, b) => a + b, 0)
-  const totalPoints = allPlayers.map(({total_points}) => total_points).reduce((a, b) => a + b, 0)
+  const totalForm = allPlayers.map(({form}) => Number.parseFloat(form)).reduce((a, b) => a + b, 0)
+  const totalPoints = allPlayers.map(({total_points}) => total_points).reduce((a, b) => a + b, 0) + totalForm
   teams = payload.teams
 
   return {
@@ -90,7 +89,8 @@ function toPlayer(element: Element): Player {
     assists: element.assists,
     saves: element.saves,
     penaltiesSaved: element.penalties_saved,
-    penaltiesMissed: element.penalties_missed
+    penaltiesMissed: element.penalties_missed,
+    form: element.form
   };
 }
 
@@ -101,15 +101,15 @@ function takeRandomN(n: number, collection: Element[]) {
 function extractPlayers(payload: Payload) {
   const players = payload.elements
   const groups = _.groupBy(players, "element_type")
-  const keepers: Element[] = takeTopBy(groups["1"])
-  const defenders: Element[] = takeTopBy(groups["2"])
-  const midfielders: Element[] = takeTopBy(groups["3"])
-  const forwards: Element[] = takeTopBy(groups["4"])
+  const keepers: Element[] = takeTopBy(groups["1"]) // 15 item
+  const defenders: Element[] = takeTopBy(groups["2"]) // 15 items
+  const midfielders: Element[] = takeTopBy(groups["3"]) // 15 items
+  const forwards: Element[] = takeTopBy(groups["4"]) // 15 items
 
   return {keepers, defenders, midfielders, forwards}
 }
 
-function takeTopBy(collection: Element[], n: number = 10) {
+function takeTopBy(collection: Element[], n: number = 15) {
   return collection
       .sort((a, b) => b.total_points - a.total_points)
       .slice(0, n)

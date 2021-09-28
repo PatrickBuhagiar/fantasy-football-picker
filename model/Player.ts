@@ -10,5 +10,6 @@ export interface Player {
   assists: number,
   saves: number,
   penaltiesSaved: number,
-  penaltiesMissed: number
+  penaltiesMissed: number,
+  form: string
 }
