@@ -1,4 +1,4 @@
-import {ChipPlay} from './ChipPlay';
+import {ChipPlay} from './chipPlay';
 
 export interface Event {
   id: number;

@@ -8,8 +8,5 @@ export interface Player {
   bonus: number,
   goalsScored: number,
   assists: number,
-  saves: number,
-  penaltiesSaved: number,
-  penaltiesMissed: number,
   form: string
 }

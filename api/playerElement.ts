@@ -1,4 +1,4 @@
-export interface Element {
+export interface PlayerElement {
   chance_of_playing_next_round?: number;
   chance_of_playing_this_round?: any;
   code: number;

@@ -16,6 +16,6 @@
     "ts-node": "^10.1.0"
   },
   "scripts": {
-    "default": "ts-node index.ts -d"
+    "randomTeamGenerator": "ts-node index.ts"
   }
 }

@@ -1,4 +1,4 @@
-import {Player} from './Player';
+import {Player} from './player';
 
 export interface TeamSelection {
   totalCost: number
